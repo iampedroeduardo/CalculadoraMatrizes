@@ -250,18 +250,53 @@ function determinante(matriz){
     }
     return [[determinante]];
 }
+function adjunta(matriz){
+    let adjunta = [];
+    for(let i = 0; i < matriz.length; i++){
+        matriz[i].push(matriz[i][0]);
+        matriz[i].push(matriz[i][1]);
+    }
+    matriz.push(matriz[0]);
+    matriz.push(matriz[1]);
+    matriz.shift();
+    matriz[0] = [matriz[0][1],matriz[0][2],matriz[0][3],matriz[0][4]];
+    matriz[1] = [matriz[1][1],matriz[1][2],matriz[1][3],matriz[1][4]];
+    matriz[2] = [matriz[2][1],matriz[2][2],matriz[2][3],matriz[2][4]];
+    matriz[3] = [matriz[3][1],matriz[3][2],matriz[3][3],matriz[3][4]];
+    for(let i = 0; i < matriz.length-1; i++){
+        adjunta.push([]);
+        for(let j = 0; j < matriz.length-1; j++){
+            adjunta[i][j] = determinante([[matriz[j][i],matriz[j][i+1]],[matriz[j+1][i],matriz[j+1][i+1]]])[0][0];
+        }
+    }
+    return adjunta;
+}
 function inversa(){
     let matriz = pegaMatriz(document.querySelector("#selectInversa").value);
-    let inversa = [[],[]];
-    if(determinante(matriz)[0][0]!=0){
-        inversa[1][0] = matriz[1][0]/(matriz[0][1]*matriz[1][0]-matriz[1][1]*matriz[0][0]);
-        inversa[0][1] = matriz[0][1]/(matriz[0][1]*matriz[1][0]-matriz[1][1]*matriz[0][0]);
-        inversa[0][0] = ((-1)*matriz[1][1])/(matriz[0][1]*matriz[1][0]-matriz[1][1]*matriz[0][0]);
-        inversa[1][1] = 1/((-1)*matriz[1][0]*matriz[0][1]+matriz[0][0]*matriz[1][1]);
-        console.log(inversa);
+    let inversa;
+    if(true){
+        if(matriz.length == 1){
+            inversa = matriz;
+        }
+        else if(matriz.length == 2){
+            inversa = [[],[]];
+            inversa[1][0] = matriz[1][0]/(matriz[0][1]*matriz[1][0]-matriz[1][1]*matriz[0][0]);
+            inversa[0][1] = matriz[0][1]/(matriz[0][1]*matriz[1][0]-matriz[1][1]*matriz[0][0]);
+            inversa[0][0] = ((-1)*matriz[1][1])/(matriz[0][1]*matriz[1][0]-matriz[1][1]*matriz[0][0]);
+            inversa[1][1] = 1/((-1)*matriz[1][0]*matriz[0][1]+matriz[0][0]*matriz[1][1]);
+        }
+        else{
+            inversa = adjunta(matriz);
+            for(let i = 0; i < inversa.length; i++){
+                for(let j = 0; j < inversa.length; j++){
+                    inversa[i][j] /= determinante(matriz)[0][0];
+                }
+            }
+        }
+        resultado(inversa);
     }
     else{
-        alert("Esta matriz não tem inversa pois seu determinante é 0.");
+        resultado([["Esta matriz não tem inversa pois seu determinante é 0."]]);
     }
 }
 function identidade(){
@@ -393,7 +428,7 @@ function calcula(){
     let conta = document.querySelector(".inputConta").value;
     let tof = true;
     if(conta.length%2==0){
-        alert("Não é possível calcular, pois o último caractere representa uma operação.")
+        resultado([["Não é possível calcular, pois o último caractere representa uma operação."]])
     }
     else{
         let pos = conta.indexOf("*");
@@ -414,7 +449,7 @@ function calcula(){
             matrizesLocais.push(multiplica(matrizA,matrizB));
             conta = conta.substring(0,pos-1)+""+(matrizesLocais.length-1)+conta.substring(pos+2);
             if(!matrizesLocais[matrizesLocais.length-1]){
-                alert("Não é possível calcular a multiplicação, pois número de linhas da primeira matriz é diferente do de colunas da segunda.");
+                resultado([["Não é possível calcular a multiplicação, pois número de linhas da primeira matriz é diferente do de colunas da segunda."]]);
                 tof = false;
                 break;
             }
@@ -445,7 +480,7 @@ function calcula(){
                         matrizesLocais.push(soma(matrizA,matrizB));
                         conta = conta.substring(0,pos1-1)+""+(matrizesLocais.length-1)+conta.substring(pos1+2);
                         if(!matrizesLocais[matrizesLocais.length-1]){
-                            alert("Não é possível calcular a adição ou subtração, pois número de linhas e colunas das matrizes é diferente.");
+                            resultado([["Não é possível calcular a adição ou subtração, pois número de linhas e colunas das matrizes é diferente."]]);
                             tof = false;
                             break;
                         }
@@ -467,7 +502,7 @@ function calcula(){
                         matrizesLocais.push(subtracao(matrizA,matrizB));
                         conta = conta.substring(0,pos2-1)+""+(matrizesLocais.length-1)+conta.substring(pos2+2);
                         if(!matrizesLocais[matrizesLocais.length-1]){
-                            alert("Não é possível calcular a adição ou subtração, pois número de linhas e colunas das matrizes é diferente.");
+                            resultado([["Não é possível calcular a adição ou subtração, pois número de linhas e colunas das matrizes é diferente."]]);
                             tof = false;
                             break;
                         }
@@ -491,7 +526,7 @@ function calcula(){
                     matrizesLocais.push(soma(matrizA,matrizB));
                     conta = conta.substring(0,pos1-1)+""+(matrizesLocais.length-1)+conta.substring(pos1+2);
                     if(!matrizesLocais[matrizesLocais.length-1]){
-                        alert("Não é possível calcular a adição ou subtração, pois número de linhas e colunas das matrizes é diferente.");
+                        resultado([["Não é possível calcular a adição ou subtração, pois número de linhas e colunas das matrizes é diferente."]]);
                         tof = false;
                         break;
                     }
@@ -513,7 +548,7 @@ function calcula(){
                     matrizesLocais.push(subtracao(matrizA,matrizB));
                     conta = conta.substring(0,pos2-1)+""+(matrizesLocais.length-1)+conta.substring(pos2+2);
                     if(!matrizesLocais[matrizesLocais.length-1]){
-                        alert("Não é possível calcular a adição ou subtração, pois número de linhas e colunas das matrizes é diferente.");
+                        resultado([["Não é possível calcular a adição ou subtração, pois número de linhas e colunas das matrizes é diferente."]]);
                         tof = false;
                         break;
                     }
