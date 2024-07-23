@@ -7,6 +7,7 @@ function adicionaMatriz(){
         <label for="colunas">Colunas ${alfabeto[letra]}:</label>
         <input type="number" name="colunas" id="colunas">
     `;
+    matrizes.push([0,0,alfabeto[letra]]);
     letra++;
     if(document.querySelectorAll(".adicionaMatriz").length == 1){
         let button = document.createElement("button");
@@ -21,6 +22,7 @@ function tiraMatriz(){
     let divs = document.querySelectorAll(".adicionaMatriz");
     let div = divs[divs.length-1];
     div.remove();
+    matrizes.pop();
     if(document.querySelectorAll(".adicionaMatriz").length == 1){
         document.querySelector("#menos").remove();
     }
@@ -49,7 +51,7 @@ function enviarMatrizes(){
     let tof = true;
     for( i = 0; i < divs.length; i++){
         if(linhas[i].value > 0 && colunas[i].value > 0){
-            matrizes.push([Number(linhas[i].value),Number(colunas[i].value),labels[i].innerHTML.charAt(labels[i].innerHTML.indexOf(":")-1)]);
+            matrizes[i] = [Number(linhas[i].value),Number(colunas[i].value),labels[i].innerHTML.charAt(labels[i].innerHTML.indexOf(":")-1)];
         }
         else{
             alert("Faltam valores.");
@@ -73,7 +75,7 @@ function criaCalculadora(){
     for(let i = 0; i < matrizes.length; i++){
         let matriz = document.createElement("div");
         matriz.setAttribute("class","matriz");
-        div.appendChild(matriz);
+        divMatrizes.appendChild(matriz);
         matriz.innerHTML = `
             ${matrizes[i][2]}:
             <div class="inputsMatriz"></div>
@@ -91,21 +93,28 @@ function criaCalculadora(){
             inputsMatriz.appendChild(linhaInputs);
         }
     }
+    let divFuncoesResultado = document.createElement("div");
+    divFuncoesResultado.setAttribute("class","divFuncoesResultado");
+    div.appendChild(divFuncoesResultado);
 
     let divFuncoes = document.createElement("div");
     divFuncoes.setAttribute("class","divFuncoes");
-    div.appendChild(divFuncoes);
+    divFuncoesResultado.appendChild(divFuncoes);
 
+    let divCalculo = document.createElement("div");
+    divCalculo.setAttribute("class","divFuncao");
+    divFuncoes.appendChild(divCalculo);
+    
     let inputConta = document.createElement("input");
     inputConta.setAttribute("class","inputConta");
     inputConta.setAttribute("oninput","testaConta();");
-    divFuncoes.appendChild(inputConta);
+    divCalculo.appendChild(inputConta);
 
     let buttonEnviar = document.createElement("button");
     buttonEnviar.setAttribute("class","buttonEnviar");
     buttonEnviar.setAttribute("onclick","zeraResultado();calcula();");
     buttonEnviar.innerHTML = "Calcular";
-    divFuncoes.appendChild(buttonEnviar);
+    divCalculo.appendChild(buttonEnviar);
 
     let divTransposta = document.createElement("div");
     divTransposta.setAttribute("class","divFuncao");
@@ -195,11 +204,60 @@ function criaCalculadora(){
     inputTriangular.setAttribute("id","inputTriangular");
     inputTriangular.setAttribute("type","number");
     divTriangular.appendChild(inputTriangular);
+
+    let divVoltar = document.createElement("div");
+    divVoltar.setAttribute("class","divVoltar");
+    div.appendChild(divVoltar);
+
+    let buttonVoltar = document.createElement("button");
+    buttonVoltar.setAttribute("onclick","voltar();");
+    buttonVoltar.setAttribute("class","buttonVoltar");
+    buttonVoltar.innerHTML = "Voltar";
+    divVoltar.appendChild(buttonVoltar);
+}
+function voltar(){
+    zeraResultado();
+    restof = false;
+    document.querySelector(".calculadora").remove();
+    let inicioMaior = document.createElement("div");
+    inicioMaior.setAttribute("class","inicioMaior");
+    document.body.appendChild(inicioMaior);
+    let inicio = document.createElement("div");
+    inicio.setAttribute("class","inicio");
+    inicioMaior.appendChild(inicio);
+    let buttonEnviar = document.createElement("button");
+    buttonEnviar.setAttribute("onclick","enviarMatrizes();");
+    buttonEnviar.setAttribute("id","enviar");
+    buttonEnviar.innerHTML = "Enviar";
+    inicioMaior.appendChild(buttonEnviar);
+    for(let i = 0; i < matrizes.length; i++){
+        let adicionaMatriz = document.createElement("div");
+        adicionaMatriz.setAttribute("class","adicionaMatriz");
+        inicio.appendChild(adicionaMatriz);
+        adicionaMatriz.innerHTML = `
+            <label for="linhas" class="labelLinha">Linhas ${matrizes[i][2]}:</label>
+            <input type="number" name="linhas" id="linhas" min="1" value="${matrizes[i][0]}">
+            <label for="colunas">Colunas ${matrizes[i][2]}:</label>
+            <input type="number" name="colunas" id="colunas" min="1" value="${matrizes[i][1]}">
+        `;
+    }
+    let buttonMais = document.createElement("button");
+    buttonMais.innerHTML = "+";
+    buttonMais.setAttribute("id","mais");
+    buttonMais.setAttribute("onclick","adicionaMatriz();");
+    inicio.appendChild(buttonMais);
+    if(matrizes.length > 1){
+        let button = document.createElement("button");
+        button.setAttribute("onclick","tiraMatriz();");
+        button.setAttribute("id","menos");
+        button.innerHTML = "-";
+        inicio.appendChild(button);
+    }
 }
 function resultado(matriz){
     let div = document.createElement("div");
     div.setAttribute("class","divResultado");
-    document.querySelector(".calculadora").appendChild(div);
+    document.querySelector(".divFuncoesResultado").appendChild(div);
     for(let i = 0; i < matriz.length; i++){
         let linhaResultado = document.createElement("p");
         for(let j = 0; j < matriz[i].length; j++){
@@ -273,8 +331,17 @@ function adjunta(matriz){
 }
 function inversa(){
     let matriz = pegaMatriz(document.querySelector("#selectInversa").value);
+    let matrize = [];
+    for(let i = 0; i < matriz.length; i++){
+        matrize.push([]);
+        for(let j = 0; j < matriz.length; j++){
+            matrize[i][j] = matriz[i][j]
+        }
+    }
     let inversa;
-    if(true){
+    let det = determinante(matriz)[0][0];
+    console.log(matrize,det);
+    if(det!=0){
         if(matriz.length == 1){
             inversa = matriz;
         }
@@ -286,10 +353,10 @@ function inversa(){
             inversa[1][1] = 1/((-1)*matriz[1][0]*matriz[0][1]+matriz[0][0]*matriz[1][1]);
         }
         else{
-            inversa = adjunta(matriz);
+            inversa = adjunta(matrize);
             for(let i = 0; i < inversa.length; i++){
                 for(let j = 0; j < inversa.length; j++){
-                    inversa[i][j] /= determinante(matriz)[0][0];
+                    inversa[i][j] /= det;
                 }
             }
         }
@@ -564,7 +631,7 @@ function calcula(){
         }
     }
 }
-let alfabeto = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-let matrizes =[];
+let alfabeto = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+let matrizes =[[0,0,"A"]];
 let letra = 1;
 let restof = false;
