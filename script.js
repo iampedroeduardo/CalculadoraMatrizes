@@ -2,9 +2,9 @@ function adicionaMatriz(){
     let div = document.createElement("div");
     div.setAttribute("class","adicionaMatriz");
     div.innerHTML = `
-        <label for="linhas" class="labelLinha">Linhas ${alfabeto[letra]}:</label>
+        <label for="linhas" class="labelLinha">LINHAS ${alfabeto[letra]}:</label>
         <input type="number" name="linhas" id="linhas">
-        <label for="colunas">Colunas ${alfabeto[letra]}:</label>
+        <label for="colunas" class="labelColuna">COLUNAS ${alfabeto[letra]}:</label>
         <input type="number" name="colunas" id="colunas">
     `;
     matrizes.push([0,0,alfabeto[letra]]);
@@ -77,7 +77,7 @@ function criaCalculadora(){
         matriz.setAttribute("class","matriz");
         divMatrizes.appendChild(matriz);
         matriz.innerHTML = `
-            ${matrizes[i][2]}:
+            <p class="text">${matrizes[i][2]}:</p>
             <div class="inputsMatriz"></div>
         `;
         let inputsMatriz = document.querySelectorAll(".inputsMatriz")[i];
@@ -88,6 +88,7 @@ function criaCalculadora(){
                 let input = document.createElement("input");
                 input.setAttribute("value","0");
                 input.setAttribute("type","number");
+                input.setAttribute("class","input");
                 linhaInputs.appendChild(input);
             }
             inputsMatriz.appendChild(linhaInputs);
@@ -235,9 +236,9 @@ function voltar(){
         adicionaMatriz.setAttribute("class","adicionaMatriz");
         inicio.appendChild(adicionaMatriz);
         adicionaMatriz.innerHTML = `
-            <label for="linhas" class="labelLinha">Linhas ${matrizes[i][2]}:</label>
+            <label for="linhas" class="labelLinha">LINHAS ${matrizes[i][2]}:</label>
             <input type="number" name="linhas" id="linhas" min="1" value="${matrizes[i][0]}">
-            <label for="colunas">Colunas ${matrizes[i][2]}:</label>
+            <label for="colunas" class="labelColuna">COLUNAS ${matrizes[i][2]}:</label>
             <input type="number" name="colunas" id="colunas" min="1" value="${matrizes[i][1]}">
         `;
     }
