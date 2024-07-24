@@ -1,0 +1,88 @@
+
+*{
+      margin: 0;
+      padding: 0;
+      background-color: #E6E6E6;
+      font-family: Arial, Helvetica, sans-serif;
+}
+
+.inicioMaior, .inputsMatriz{
+      display: flex;
+      flex-direction: column;
+}
+
+.inicio, .divMatrizes{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 60%;
+      margin-left: 20%;
+}
+
+.adicionaMatriz, #mais, #menos, .matriz{
+      background-color: white;
+      border-radius: 20px;
+      width: 300px;
+      height: 330px;
+      margin-top: 140px;
+      box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.455);
+}
+
+#mais, #menos{
+      border: 0;
+      font-size:5vw;
+}
+
+#enviar{
+      background-color: white;
+      margin-top: 60px;
+      width: 15%;
+      height: 60px;
+      border: 0;
+      border-radius: 25px;
+      margin-left: 42.5%;
+      font-size: 1.3vw;
+      box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.455);
+}
+
+.labelLinha, .labelColuna,  #linhas, #colunas{
+      background-color: white;
+      font-size: 1.5vw;
+      margin-top: 50px;
+      margin-left: 30px;
+
+}
+#linhas, #colunas{
+      width: 45px;
+      margin-top: 20px;
+}
+
+.input{
+      width: 30px;
+      margin-top: 20px;
+}
+
+.linhaInputs{
+      background-color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+}
+
+.input{
+      background-color: white;
+      margin-top: 10px;
+      text-align: center;
+}
+
+.inputsMatriz, .text{
+      background-color: white;
+      margin-left: 10px;
+      margin-right: 10px;
+}
+
+.text{
+      margin-top: 20px;
+      font-size: 1.3vw;
+}
