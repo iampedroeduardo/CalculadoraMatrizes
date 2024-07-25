@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Matrizes</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="inicioMaior">
@@ -11,7 +12,7 @@
             <div class="adicionaMatriz">
                 <label for="linhas" class="labelLinha">Linhas A:</label>
                 <input type="number" name="linhas" id="linhas" min="1">
-                <label for="colunas">Colunas A:</label>
+                <label for="colunas" class="labelColuna">Colunas A:</label>
                 <input type="number" name="colunas" id="colunas" min="1">
             </div>
             <button onclick="adicionaMatriz();" id="mais">+</button>

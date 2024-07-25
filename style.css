@@ -86,3 +86,101 @@
       margin-top: 20px;
       font-size: 1.3vw;
 }
+
+body{
+      background-color: #E6E6E6;
+      font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .divFuncoes{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .divFuncoesResultado{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+      padding: 10px;
+  }
+  
+  .divVoltar{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+  .inputConta{
+      height: 25px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      margin: 10px;
+  }
+  
+  .buttonEnviar{
+      background-color: #FFF;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  
+  }
+  
+  .divResultado{
+      background-color: #FFF;
+      border-radius: 10px;
+      border: none;
+      padding: 20px;
+      margin: 30px;
+  }
+  
+  .buttonFuncao{
+      background-color: #FFF;
+      height: 25px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      margin: 10px;
+      width: 150px;
+  }
+  
+  select{
+      background-color: #FFF;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      width: 50px;
+  }
+  
+  .inputFuncao {
+      height: 25px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      margin: 10px;
+      width: 50px;
+  }
+  
+  .buttonVoltar{
+      background-color: palegreen;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      padding: 5px;
+      width: 80px;
+      height: 30px;
+      font-weight: bold;
+  }
+  
+  .divResultado p{
+      height: 20px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      margin: 5px;
+      padding: 5px;
+  }
